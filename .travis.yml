@@ -9,4 +9,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: stokpop/afterburner
-  name: $project_version
+
