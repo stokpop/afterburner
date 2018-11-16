@@ -1,2 +1,12 @@
 language: java
-script: ./mvnw -pl afterburner-java install
+script: "./mvnw -pl afterburner-java install"
+deploy:
+  provider: releases
+  api_key:
+    secure: B4pJYpXoKBmGQQKg5yM7s10R/6wnfvIhYuSht204kzYpbeqUgx31arDC5Xwn0MiL8zxW5ubHkrx3NyRYFNbnShtBwOiD9BT67as2iJx/Cg0pwYSL0iqK9N/HondOKK4FWeT1oCRVBktUSnMZtLAWWopr3vbGy2yAXiARpL0ixLf09FOr8/vIJfcyo1d9Fz90sptHXPSMEqQGbqdsMeB3igG6bIQGGUy7qH9iUI06ekp4+Qz0sx4RRkR5PsoCvtEVuvOQO4kymwfGmluFKSCuE/ILhvmAm2foAxIWvr6KywZwkS02p4kid2vMwDxLAYTD17w0GNlcOx+1osBvdEm7px1oq/OaIbzCvIxXGNdY5Hb7Pw0jurGYLQjCyY6XdfvsOYlPctSf6cUBVpoJBjbqv+XemqYSgzJ4Z1ZbLqYSYWUn4kD4yX5wAPbXQMLy2aKa+YFMxrVT+rXwMf3Lte4GnZsFzbvwzioDPyOa3iNFvVqxIUeCWHIgrV36YI6h2JCqCPjv4/ow0COBgYqCJl0JwUGFz/0Xmf4ysvHs8vemRXmBai9WdBvThTYxyE0aFCSOoIYir/wwjdC2Aw1adVD9wYR6rermeryfuYb6S/A9QissR5g46pHytd+10lmi9Ly/adLdP/O5U3SuekVa2zl0cy6vId1/leWwS/DM8JKrCto=
+  file: afterburner-java/target/afterburner-java-$project_version-exec.jar
+  file: afterburner-java/target/afterburner-java-$project_version.jar
+  skip_cleanup: true
+  on:
+    repo: stokpop/afterburner
+  name: $project_version
