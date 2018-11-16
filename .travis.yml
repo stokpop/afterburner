@@ -1,2 +1,2 @@
 language: java
-script: mvnw -pl afterburner-java install
+script: ./mvnw -pl afterburner-java install
