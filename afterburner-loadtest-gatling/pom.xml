@@ -82,9 +82,9 @@
                     <version>${scala-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>io.gatling</groupId>
-                    <artifactId>gatling-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <groupId>io.perfana</groupId>
+                    <artifactId>perfana-gatling-maven-plugin</artifactId>
+                    <version>3.2.1-SNAPSHOT</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -113,11 +113,35 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>io.gatling</groupId>
-                <artifactId>gatling-maven-plugin</artifactId>
+                <groupId>io.perfana</groupId>
+                <artifactId>perfana-gatling-maven-plugin</artifactId>
                 <configuration>
+                    <perfanaEnabled>true</perfanaEnabled>
+                    <perfanaUrl>http://localhost:4000</perfanaUrl>
+                    <assertResultsEnabled>true</assertResultsEnabled>
                     <simulationClass>afterburner.AfterburnerBasicSimulation</simulationClass>
+                    <eventScheduleScript>
+                        PT5S|restart|{ server:'myserver' replicas:2 tags: [ 'first', 'second' ] }
+                        PT10S|heapdump|durationInMillis=15000
+                        PT15S|fail-over|server=myserver.example.com;port=1567
+                        PT1M|scale-down|{ replicas:2 }
+                        PT5H|never-called|{ replicas:2 }
+                        PT6H|never-called|{ replicas:2 }
+                    </eventScheduleScript>
+                    <perfanaEventProperties>
+                        <nl.stokpop.perfana.event.StokpopHelloPerfanaEvent>
+                            <myName>myValue</myName>
+                            <myCredentials>WEKJRHWEKJRHWLERJ</myCredentials>
+                        </nl.stokpop.perfana.event.StokpopHelloPerfanaEvent>
+                    </perfanaEventProperties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>nl.stokpop</groupId>
+                        <artifactId>perfana-hello-world-events</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

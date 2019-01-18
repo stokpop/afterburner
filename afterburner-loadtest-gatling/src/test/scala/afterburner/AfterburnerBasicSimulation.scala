@@ -6,7 +6,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 
 class AfterburnerBasicSimulation extends Simulation {
-    private val baseUrl = "http://localhost:8080"
+    private val baseUrl = "http://localhost:8787"
     private val contentType = "application/json"
 
     val httpProtocol: HttpProtocolBuilder = http
@@ -40,6 +40,6 @@ class AfterburnerBasicSimulation extends Simulation {
         )
 
 
-    setUp(scn.inject(constantUsersPerSec(12) during 30)).protocols(httpProtocol)
+    setUp(scn.inject(constantUsersPerSec(1) during 400)).protocols(httpProtocol)
     //setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
 }

@@ -22,16 +22,17 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>com.lazerycode.jmeter</groupId>
-                    <artifactId>jmeter-maven-plugin</artifactId>
-                    <version>2.8.0</version>
+                    <groupId>io.perfana</groupId>
+                    <artifactId>perfana-jmeter-maven-plugin</artifactId>
+                    <version>1.2.1-SNAPSHOT</version>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-maven-plugin</artifactId>
+                <groupId>io.perfana</groupId>
+                <artifactId>perfana-jmeter-maven-plugin</artifactId>
+                
                 <executions>
                     <!-- Run JMeter tests -->
                     <execution>
@@ -48,6 +49,38 @@
                         </goals>
                     </execution>
                 </executions>
+                <!-- perfana specific settings -->
+                <configuration>
+                    <perfanaEnabled>true</perfanaEnabled>
+                    <perfanaUrl>http://localhost:4000</perfanaUrl>
+                    <perfanaAssertResultsEnabled>true</perfanaAssertResultsEnabled>
+                    <perfanaApplication>Afterburner</perfanaApplication>
+                    <perfanaTestEnvironment>stokpop-local</perfanaTestEnvironment>
+                    <perfanaTestRunId>run-2</perfanaTestRunId>
+                    <perfanaApplicationRelease>${project.version}</perfanaApplicationRelease>
+                    <perfanaTestType>JMETER</perfanaTestType>
+                    <eventScheduleScript>
+                        PT5S|restart|{ server:'myserver' replicas:2 tags: [ 'first', 'second' ] }
+                        PT10S|heapdump|durationInMillis=15000
+                        PT15S|fail-over|server=myserver.example.com;port=1567
+                        PT1M|scale-down|{ replicas:2 }
+                        PT5H|never-called|{ replicas:2 }
+                        PT6H|never-called|{ replicas:2 }
+                    </eventScheduleScript>
+                    <perfanaEventProperties>
+                        <nl.stokpop.perfana.event.StokpopHelloPerfanaEvent>
+                            <myName>myValue</myName>
+                            <myCredentials>WEKJRHWEKJRHWLERJ</myCredentials>
+                        </nl.stokpop.perfana.event.StokpopHelloPerfanaEvent>
+                    </perfanaEventProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>nl.stokpop</groupId>
+                        <artifactId>perfana-hello-world-events</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
