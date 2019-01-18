@@ -84,7 +84,7 @@
                 <plugin>
                     <groupId>io.perfana</groupId>
                     <artifactId>perfana-gatling-maven-plugin</artifactId>
-                    <version>3.2.1-SNAPSHOT</version>
+                    <version>3.2.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -128,6 +128,9 @@
                         PT5H|never-called|{ replicas:2 }
                         PT6H|never-called|{ replicas:2 }
                     </eventScheduleScript>
+                    <schedulerEvents>
+                        <schedulerEvent>PT15S|fail-over|server=myserver.example.com;port=1567</schedulerEvent>
+                    </schedulerEvents>
                     <perfanaEventProperties>
                         <nl.stokpop.perfana.event.StokpopHelloPerfanaEvent>
                             <myName>myValue</myName>
